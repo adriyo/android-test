@@ -25,13 +25,17 @@ fun LoginRoute(navController: NavHostController, viewModel: LoginViewModel = hil
             AppEvent.NavigateToPhotoScreen -> {
                 context.toast(R.string.msg_login_success)
                 navController.navigate(Routes.PHOTOS) {
-                    popUpTo(Routes.LOGIN)
+                    popUpTo(Routes.LOGIN) {
+                        inclusive = true
+                    }
                 }
             }
             AppEvent.NavigateToUserScreen -> {
                 context.toast(R.string.msg_login_success)
                 navController.navigate(Routes.USERS) {
-                    popUpTo(Routes.LOGIN)
+                    popUpTo(Routes.LOGIN) {
+                        inclusive = true
+                    }
                 }
             }
 

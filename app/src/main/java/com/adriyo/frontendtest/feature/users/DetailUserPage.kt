@@ -147,7 +147,7 @@ fun DetailUserPage(
             InputPasswordDialog(
                 uiState = uiState,
                 formEvent = formEvent,
-                onDismissRequest = {},
+                onDismissRequest = { formEvent(UiEvent.OnChangePasswordDialogVisibility(false)) },
             )
         }
     }
@@ -163,8 +163,8 @@ fun InputPasswordDialog(
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true
         ),
     ) {
         Surface(

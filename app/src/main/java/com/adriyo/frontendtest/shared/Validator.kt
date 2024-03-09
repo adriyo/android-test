@@ -1,5 +1,6 @@
 package com.adriyo.frontendtest.shared
 
+import androidx.core.util.PatternsCompat
 import com.adriyo.frontendtest.R
 import javax.inject.Inject
 
@@ -15,7 +16,7 @@ class Validator @Inject constructor(
         if (input.isEmpty()) {
             return Pair(false, resource.getString(R.string.err_empty_email))
         }
-        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()) {
+        if (!PatternsCompat.EMAIL_ADDRESS.matcher(input).matches()) {
             return Pair(false, resource.getString(R.string.err_invalid_email))
         }
         return Pair(true, null)

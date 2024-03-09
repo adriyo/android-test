@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.adriyo.frontendtest.data.model.UserRole
 import com.adriyo.frontendtest.data.repository.AuthRepository
+import com.adriyo.frontendtest.shared.DispatcherProvider
 import com.adriyo.frontendtest.shared.Validator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository,
+    private val dispatcher: DispatcherProvider,
     private val validator: Validator,
 ) : ViewModel() {
 
@@ -73,8 +74,7 @@ class LoginViewModel @Inject constructor(
     private fun submit() {
         if (!validated()) return
         _uiState.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            delay(1000)
+        viewModelScope.launch(dispatcher.io) {
             val email = uiState.value.email
             val password = uiState.value.password
             val result = authRepository.login(email, password)
